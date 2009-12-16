@@ -22,6 +22,8 @@ void isim_controller::run()
     bool down_pressed = false;
     bool right_pressed = false;
     bool left_pressed = false;
+    bool z_pressed = false;
+    bool x_pressed = false;
 
     while (!done)
     {
@@ -57,6 +59,12 @@ void isim_controller::run()
                         case SDLK_RIGHT:
                             right_pressed = true;
                         break;
+                        case SDLK_z:
+                            z_pressed = true;
+                        break;
+                        case SDLK_x:
+                            x_pressed = true;
+                        break;
                         default:
                             //
                         break;
@@ -77,6 +85,12 @@ void isim_controller::run()
                         break;
                         case SDLK_RIGHT:
                             right_pressed = false;
+                        break;
+                        case SDLK_z:
+                            z_pressed = false;
+                        break;
+                        case SDLK_x:
+                            x_pressed = false;
                         break;
                         default:
                             //
@@ -103,6 +117,24 @@ void isim_controller::run()
         else if (right_pressed)
         {
             isim_aircraft.set_bank_angle(isim_aircraft.get_bank_angle() + 0.12);
+        }
+        if (z_pressed)
+        {
+            double new_power_setting = isim_aircraft.get_power_setting() - 0.01;
+            if (new_power_setting < 15)
+            {
+                new_power_setting = 15;
+            }
+            isim_aircraft.set_power_setting(new_power_setting);
+        }
+        else if (x_pressed)
+        {
+            double new_power_setting = isim_aircraft.get_power_setting() + 0.01;
+            if (new_power_setting > 28)
+            {
+                new_power_setting = 28;
+            }
+            isim_aircraft.set_power_setting(new_power_setting);
         }
 
         step();

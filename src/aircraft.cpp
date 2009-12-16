@@ -30,6 +30,10 @@ void aircraft::simulate(int step_millis)
         altitude = 0;
     }
 
+    double desired_airspeed = power_setting *  4.10714285;
+    double airspeed_difference = desired_airspeed - airspeed;
+    airspeed = airspeed + (airspeed_difference * 0.00015 * step_millis);
+
 }
 
 double aircraft::get_airspeed() const

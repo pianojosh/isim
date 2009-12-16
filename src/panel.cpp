@@ -13,6 +13,7 @@
 #include "../include/turn_coordinator.h"
 #include "../include/heading_indicator.h"
 #include "../include/vertical_speed_indicator.h"
+#include "../include/manifold_pressure_gauge.h"
 
 #include <map>
 
@@ -69,6 +70,9 @@ void panel::initialize()
             break;
             case 7:
                 elements[i] = new vertical_speed_indicator(cur_x, cur_y, size, size * y_correct);
+            break;
+            case 10:
+                elements[i] = new manifold_pressure_gauge(cur_x, cur_y, size, size * y_correct);
             break;
             default:
                 elements[i] = new panel_element(cur_x, cur_y, size, size * y_correct);

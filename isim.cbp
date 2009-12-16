@@ -59,6 +59,7 @@
 		<Unit filename="include\ils_gauge.h" />
 		<Unit filename="include\isim_controller.h" />
 		<Unit filename="include\localizer.h" />
+		<Unit filename="include\manifold_pressure_gauge.h" />
 		<Unit filename="include\ndb.h" />
 		<Unit filename="include\panel.h" />
 		<Unit filename="include\panel_element.h" />
@@ -77,6 +78,7 @@
 		<Unit filename="src\heading_indicator.cpp" />
 		<Unit filename="src\isim_controller.cpp" />
 		<Unit filename="src\main.cpp" />
+		<Unit filename="src\manifold_pressure_gauge.cpp" />
 		<Unit filename="src\panel.cpp" />
 		<Unit filename="src\panel_element.cpp" />
 		<Unit filename="src\sdl_helper.cpp" />
