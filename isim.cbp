@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="isim" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\isim" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\isim" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-fexpensive-optimizations" />
+			<Add option="-O3" />
+			<Add option="-pedantic" />
+			<Add option="-Wall" />
+			<Add directory="C:\SDL\SDL-1.2.14\include" />
+			<Add directory="C:\Projects\sge030809-w32\sge030809-w32\src\headers_only" />
+		</Compiler>
+		<Linker>
+			<Add library="mingw32" />
+			<Add library="SDLmain" />
+			<Add library="SDL.dll" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="winmm" />
+			<Add library="dxguid" />
+			<Add library="libSGE" />
+			<Add directory="C:\SDL\SDL-1.2.14\lib" />
+			<Add directory="C:\Projects\sge030809-w32\sge030809-w32\build" />
+		</Linker>
+		<Unit filename="include\adf_gauge.h" />
+		<Unit filename="include\adf_receiver.h" />
+		<Unit filename="include\aircraft.h" />
+		<Unit filename="include\airport.h" />
+		<Unit filename="include\airspeed_indicator.h" />
+		<Unit filename="include\altimeter.h" />
+		<Unit filename="include\attitude_indicator.h" />
+		<Unit filename="include\cdi_gauge.h" />
+		<Unit filename="include\ground_object.h" />
+		<Unit filename="include\heading_indicator.h" />
+		<Unit filename="include\ils.h" />
+		<Unit filename="include\ils_gauge.h" />
+		<Unit filename="include\isim_controller.h" />
+		<Unit filename="include\localizer.h" />
+		<Unit filename="include\ndb.h" />
+		<Unit filename="include\panel.h" />
+		<Unit filename="include\panel_element.h" />
+		<Unit filename="include\runway.h" />
+		<Unit filename="include\sdl_helper.h" />
+		<Unit filename="include\turn_coordinator.h" />
+		<Unit filename="include\vertical_speed_indicator.h" />
+		<Unit filename="include\vor.h" />
+		<Unit filename="include\vor_receiver.h" />
+		<Unit filename="include\world.h" />
+		<Unit filename="src\aircraft.cpp" />
+		<Unit filename="src\airspeed_indicator.cpp" />
+		<Unit filename="src\altimeter.cpp" />
+		<Unit filename="src\attitude_indicator.cpp" />
+		<Unit filename="src\ground_object.cpp" />
+		<Unit filename="src\heading_indicator.cpp" />
+		<Unit filename="src\isim_controller.cpp" />
+		<Unit filename="src\main.cpp" />
+		<Unit filename="src\panel.cpp" />
+		<Unit filename="src\panel_element.cpp" />
+		<Unit filename="src\sdl_helper.cpp" />
+		<Unit filename="src\turn_coordinator.cpp" />
+		<Unit filename="src\vertical_speed_indicator.cpp" />
+		<Unit filename="src\vor.cpp" />
+		<Unit filename="src\world.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
