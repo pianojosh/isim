@@ -56,7 +56,7 @@ void sdl_helper::flip()
 
 void sdl_helper::draw_line_color(int startx, int starty, int endx, int endy, Uint32 color)
 {
-    sge_Line(surface, startx, starty, endx, endy, color);
+    sge_AALine(surface, startx, starty, endx, endy, color);
 }
 
 void sdl_helper::fill_rect_color(int startx, int starty, int endx, int endy, Uint32 color)
@@ -71,12 +71,12 @@ void sdl_helper::normal_fill_rect_color(double startx, double starty, double end
 
 void sdl_helper::normal_line_color(double startx, double starty, double endx, double endy, Uint32 color)
 {
-    sge_Line(surface, (int)(surface->w*startx), (int)(surface->h*starty), (int)(surface->w*endx), (int)(surface->h*endy), color);
+    sge_AALine(surface, (int)(surface->w*startx), (int)(surface->h*starty), (int)(surface->w*endx), (int)(surface->h*endy), color);
 }
 
 void sdl_helper::normal_ellipse_color(double x, double y, double rx, double ry, Uint32 color)
 {
-    sge_Ellipse(surface, (int)(surface->w*x), (int)(surface->h*y), (int)(surface->w*rx), (int)(surface->h*ry), color);
+    sge_AAEllipse(surface, (int)(surface->w*x), (int)(surface->h*y), (int)(surface->w*rx), (int)(surface->h*ry), color);
 }
 
 void sdl_helper::normal_floodfill_color(double x, double y, Uint32 color)
@@ -98,7 +98,7 @@ void sdl_helper::normal_fillpoly_color(double* x, double* y, int n, Uint32 color
         px[i] = (Sint16)(surface->w*x[i]);
         py[i] = (Sint16)(surface->h*y[i]);
     }
-    sge_FilledPolygon(surface, n, px, py, color);
+    sge_AAFilledPolygon(surface, n, px, py, color);
     delete[] px;
     delete[] py;
 }
