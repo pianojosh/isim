@@ -12,17 +12,17 @@ void aircraft::simulate(int step_millis)
     // most of these are try-and-tweak
     const double AIRSPEED_TURN_FACTOR = 1.5;
     const double TURN_MULTIPLIER = 1500.0;
-    const double CLIMB_MULTIPLIER = 32.0;
+    const double CLIMB_MULTIPLIER = 64.0;
     const double CLIMB_TURN_FACTOR = 10.0;
-    const double CLIMB_SPEED_FACTOR = 1.0;
-    const double AIRSPEED_POWER_FACTOR = 4.10714285;
+    const double AIRSPEED_POWER_FACTOR = 6.9230769;
     const double AIRSPEED_CLIMB_FACTOR = 0.05;
+    const double AIRSPEED_STEP_FACTOR = 0.00045;
+    const double AIRSPEED_STALL_FACTOR = 0.75;
 
     turn_rate = (TURN_MULTIPLIER * tan(panel_element::degrees_to_radians(bank_angle)) / (AIRSPEED_TURN_FACTOR * airspeed));
     climb_rate = CLIMB_MULTIPLIER * tan(panel_element::degrees_to_radians(pitch_angle)) * airspeed;
 
     climb_rate -= CLIMB_TURN_FACTOR * fabs(bank_angle);
-
 
     heading += turn_rate * ((double)step_millis / 1000.0);
     altitude += climb_rate * ((double)step_millis / 60000.0);
@@ -41,9 +41,14 @@ void aircraft::simulate(int step_millis)
         altitude = 0;
     }
 
-    double desired_airspeed = power_setting * AIRSPEED_POWER_FACTOR - climb_rate * AIRSPEED_CLIMB_FACTOR;
+    double desired_airspeed = 30 + (power_setting - 15) * AIRSPEED_POWER_FACTOR - climb_rate * AIRSPEED_CLIMB_FACTOR;
     double airspeed_difference = desired_airspeed - airspeed;
-    airspeed = airspeed + (airspeed_difference * 0.00015 * step_millis);
+    airspeed = airspeed + (airspeed_difference * AIRSPEED_STEP_FACTOR * step_millis);
+
+    if (airspeed < 50)
+    {
+        pitch_angle -= (50 - airspeed) * AIRSPEED_STALL_FACTOR;
+    }
 
 }
 
