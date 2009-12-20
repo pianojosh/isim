@@ -61,7 +61,7 @@ void vertical_speed_indicator::draw(const aircraft& a, const world& w)
         sdl_helper::WHITE
     );
 
-    draw_needle(x_position, y_position, theta - PI, radius_for_theta(theta - PI), 5, 0.0, sdl_helper::WHITE);
+    draw_needle(x_position, y_position, theta - PI, radius_for_theta(theta - PI), degrees_to_radians(10), 0.25, sdl_helper::WHITE);
 }
 
 #endif

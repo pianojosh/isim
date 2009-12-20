@@ -61,8 +61,13 @@ void turn_coordinator::draw(const aircraft& a, const world& w)
         sdl_helper::WHITE
     );
 
-    draw_needle(x_position, y_position, theta, radius_for_theta(theta), 5, 0.0, sdl_helper::WHITE);
-    draw_needle(x_position, y_position, theta + PI, radius_for_theta(theta + PI), 5, 0.0, sdl_helper::WHITE);
+    draw_needle(x_position, y_position, theta, radius_for_theta(theta), degrees_to_radians(25), 0.05, sdl_helper::WHITE);
+    draw_needle(x_position, y_position, theta + PI, radius_for_theta(theta + PI), degrees_to_radians(25), 0.05, sdl_helper::WHITE);
+    sdl_helper::normal_ellipse_color(x_position, y_position, x_size * 0.05, y_size * 0.05, sdl_helper::WHITE);
+    sdl_helper::normal_ellipse_color(x_position, y_position, x_size * 0.05, y_size * 0.04, sdl_helper::WHITE);
+    sdl_helper::normal_ellipse_color(x_position, y_position, x_size * 0.05, y_size * 0.03, sdl_helper::WHITE);
+    sdl_helper::normal_ellipse_color(x_position, y_position, x_size * 0.05, y_size * 0.02, sdl_helper::WHITE);
+    sdl_helper::normal_ellipse_color(x_position, y_position, x_size * 0.05, y_size * 0.01, sdl_helper::WHITE);
 }
 
 #endif
