@@ -102,7 +102,7 @@ void panel::draw(const aircraft& a, const world& w)
         iter->second->draw(a, w);
     }
 
-    w.draw_moving_map(0.8, 0.8, 0.15, 0.15);
+    w.draw_moving_map(0.8, 0.8, 0.15, 0.15, a);
 }
 
 

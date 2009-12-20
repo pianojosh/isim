@@ -2,6 +2,7 @@
 #define __WORLD_CPP
 
 #include "../include/world.h"
+#include "../include/sdl_helper.h"
 
 #include <iostream>
 #include <algorithm>
@@ -11,10 +12,14 @@ using std::vector;
 using std::cout;
 using std::endl;
 
-void world::draw_moving_map(double xpos, double ypos, double xsize, double ysize) const
+void world::draw_moving_map(double xpos, double ypos, double xsize, double ysize, const aircraft& a) const
 {
     double world_x_size = x_dim_max - x_dim_min;
     double world_y_size = y_dim_max - y_dim_min;
+
+    double aircraft_x_normalized_location = xpos + xsize * ((a.get_x_position() - x_dim_min) / world_x_size);
+    double aircraft_y_normalized_location = ypos + ysize + -1.0 * ysize * ((a.get_y_position() - y_dim_min) / world_y_size);
+    sdl_helper::normal_ellipse_color(aircraft_x_normalized_location, aircraft_y_normalized_location, xsize / 20.0, ysize / 20.0, sdl_helper::RED);
 
     vector<ground_object*> o = objects;
     for (unsigned int i = 0; i < o.size(); i++)
@@ -24,6 +29,8 @@ void world::draw_moving_map(double xpos, double ypos, double xsize, double ysize
         double object_y_normalized_location = ypos + ysize + -1.0 * ysize * ((object->get_y_position() - y_dim_min) / world_y_size);
         object->draw_moving_map_symbol(object_x_normalized_location, object_y_normalized_location, xsize, ysize);
     }
+
+
 }
 
 void world::set_dimensions(double xds, double xdb, double yds, double ydb)

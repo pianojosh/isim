@@ -2,6 +2,7 @@
 #define __WORLD_H
 
 #include "ground_object.h"
+#include "aircraft.h"
 
 #include <vector>
 
@@ -43,7 +44,7 @@ class world
         void add_object(ground_object* obj);
         void finalize_objects();
 
-        void draw_moving_map(double xpos, double ypos, double xsize, double ysize) const;
+        void draw_moving_map(double xpos, double ypos, double xsize, double ysize, const aircraft& a) const;
 
 };
 

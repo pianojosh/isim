@@ -201,6 +201,8 @@ void isim_controller::initialize()
     isim_aircraft.set_airspeed(90);
     isim_aircraft.set_altitude(2000);
     isim_aircraft.set_power_setting(25);
+    isim_aircraft.set_x_position(-71.2890300);
+    isim_aircraft.set_y_position(42.4699531);
 }
 
 void isim_controller::initialize_video()

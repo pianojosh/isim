@@ -18,6 +18,9 @@ void aircraft::simulate(int step_millis)
     const double AIRSPEED_CLIMB_FACTOR = 0.05;
     const double AIRSPEED_STEP_FACTOR = 0.00045;
     const double AIRSPEED_STALL_FACTOR = 0.75;
+    const double STALL_SPEED = 50.0;
+    const double SPEED_BASE = 30.0;
+    const double MIN_POWER = 15.0;
 
     turn_rate = (TURN_MULTIPLIER * tan(panel_element::degrees_to_radians(bank_angle)) / (AIRSPEED_TURN_FACTOR * airspeed));
     climb_rate = CLIMB_MULTIPLIER * tan(panel_element::degrees_to_radians(pitch_angle)) * airspeed;
@@ -41,14 +44,26 @@ void aircraft::simulate(int step_millis)
         altitude = 0;
     }
 
-    double desired_airspeed = 30 + (power_setting - 15) * AIRSPEED_POWER_FACTOR - climb_rate * AIRSPEED_CLIMB_FACTOR;
+    double desired_airspeed = SPEED_BASE + (power_setting - MIN_POWER) * AIRSPEED_POWER_FACTOR - climb_rate * AIRSPEED_CLIMB_FACTOR;
     double airspeed_difference = desired_airspeed - airspeed;
     airspeed = airspeed + (airspeed_difference * AIRSPEED_STEP_FACTOR * step_millis);
 
-    if (airspeed < 50)
+    if (airspeed < STALL_SPEED)
     {
-        pitch_angle -= (50 - airspeed) * AIRSPEED_STALL_FACTOR;
+        pitch_angle -= (STALL_SPEED - airspeed) * AIRSPEED_STALL_FACTOR;
     }
+
+    double x_knots = airspeed * cos(panel_element::degrees_to_radians(heading - 90.0));
+    double y_knots = airspeed * -sin(panel_element::degrees_to_radians(heading - 90.0));
+    double x_delta = step_millis * x_knots / (60.0 * 60.0 * 1000.0);
+    double y_delta = step_millis * y_knots / (60.0 * 60.0 * 1000.0);
+
+    double xmpd = nautical_miles_per_degree_latitude_at_degrees_latitude(y_position);
+    double ympd = nautical_miles_per_degree_longitude_at_degrees_latitude(y_position);
+
+    x_position += x_delta / xmpd;
+    y_position += y_delta / ympd;
+
 
 }
 
@@ -115,6 +130,47 @@ double aircraft::get_turn_rate() const
 double aircraft::get_climb_rate() const
 {
     return climb_rate;
+}
+
+double aircraft::get_x_position() const
+{
+    return x_position;
+}
+
+void aircraft::set_x_position(double x)
+{
+    x_position = x;
+}
+
+double aircraft::get_y_position() const
+{
+    return y_position;
+}
+
+void aircraft::set_y_position(double y)
+{
+    y_position = y;
+}
+
+double aircraft::nautical_miles_per_degree_latitude_at_degrees_latitude(double degrees_latitude)
+{
+    const double m1 = 111132.92;
+    const double m2 = -559.82;
+    const double m3 = 1.175;
+    const double m4 = -0.0023;
+
+    double lat = panel_element::degrees_to_radians(degrees_latitude);
+    return 0.000539955723 * (m1 + (m2 * cos(2 * lat)) + (m3 * cos(4 * lat)) + (m4 * cos(6 * lat)));
+}
+
+double aircraft::nautical_miles_per_degree_longitude_at_degrees_latitude(double degrees_latitude)
+{
+    const double p1 = 111412.84;
+    const double p2 = -93.5;
+    const double p3 = 0.118;
+
+    double lat = panel_element::degrees_to_radians(degrees_latitude);
+    return 0.000539955723 * ((p1 * cos(lat)) + (p2 * cos(3 * lat)) + (p3 * cos(5 * lat)));
 }
 
 #endif
