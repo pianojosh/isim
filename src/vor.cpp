@@ -6,6 +6,8 @@
 
 #define ANGLE_APPROX 0.5
 
+vor vor::nonexistent_vor = vor(0, 0, 0, 0, "NONEXISTENT", -1);
+
 int vor::get_frequency()
 {
     return frequency;

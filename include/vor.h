@@ -17,6 +17,8 @@ class vor : public ground_object
 
         int get_frequency();
         virtual void draw_moving_map_symbol(double xpos, double ypos, double xsize, double ysize);
+
+        static vor nonexistent_vor;
 };
 
 #endif

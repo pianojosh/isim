@@ -26,8 +26,10 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-march=nocona" />
 			<Add option="-fexpensive-optimizations" />
 			<Add option="-O3" />
+			<Add option="-pedantic-errors" />
 			<Add option="-pedantic" />
 			<Add option="-Wall" />
 			<Add directory="C:\SDL\SDL-1.2.14\include" />
@@ -85,6 +87,7 @@
 		<Unit filename="src\turn_coordinator.cpp" />
 		<Unit filename="src\vertical_speed_indicator.cpp" />
 		<Unit filename="src\vor.cpp" />
+		<Unit filename="src\vor_receiver.cpp" />
 		<Unit filename="src\world.cpp" />
 		<Extensions>
 			<code_completion />

@@ -4,6 +4,8 @@
 #include "ground_object.h"
 #include "aircraft.h"
 
+#include "vor.h"
+
 #include <vector>
 
 using std::vector;
@@ -43,6 +45,8 @@ class world
 
         void add_object(ground_object* obj);
         void finalize_objects();
+
+        const vor& get_vor_by_frequency(int vor_frequency) const;
 
         void draw_moving_map(double xpos, double ypos, double xsize, double ysize, const aircraft& a) const;
 
