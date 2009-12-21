@@ -13,7 +13,7 @@ class ground_object
         int variation;
 
     protected:
-        virtual double moving_map_size_factor();
+        virtual double moving_map_size_factor() const;
         std::string identifier;
 
     public:
@@ -33,13 +33,13 @@ class ground_object
         {}
         virtual ~ground_object() {}
 
-        virtual double get_x_position();
-        virtual double get_y_position();
+        virtual double get_x_position() const;
+        virtual double get_y_position() const;
 
         static int compare_by_x_dimension(ground_object* l, ground_object* r);
         static int compare_by_y_dimension(ground_object* l, ground_object* r);
 
-        virtual void draw_moving_map_symbol(double xpos, double ypos, double xsize, double ysize);
+        virtual void draw_moving_map_symbol(double xpos, double ypos, double xsize, double ysize) const;
 
 };
 

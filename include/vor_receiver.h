@@ -3,12 +3,15 @@
 
 #include "panel_element.h"
 #include "world.h"
+#include "cdi_gauge.h"
 
 class vor_receiver : public panel_element
 {
     private:
         int active_frequency;
         int standby_frequency;
+
+        double compute_actual_radial(const vor& v, const aircraft& a);
 
     public:
         vor_receiver() {}
@@ -19,7 +22,7 @@ class vor_receiver : public panel_element
             standby_frequency(11440)
         {}
 
-        double get_deviation(int selected_heading, const world& w);
+        cdi_gauge::cdi_information get_deviation(int selected_heading, const aircraft& a, const world& w);
 };
 
 #endif
