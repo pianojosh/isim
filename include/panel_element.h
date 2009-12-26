@@ -11,8 +11,8 @@ class panel_element
         double x_size;
         double y_size;
 
-        void draw_needle(double x, double y, double theta, double length, double theta_offset, double length_offset, Uint32 color);
-        double radius_for_theta(double theta);
+        void draw_needle(double x, double y, double theta, double length, double theta_offset, double length_offset, Uint32 color) const;
+        double radius_for_theta(double theta) const;
 
     public:
         panel_element() {}
@@ -25,11 +25,10 @@ class panel_element
         {}
 
         //children can implement whichever of these is appropriate
-        virtual void draw(const aircraft& a, const world& w);
+        virtual void draw(const aircraft& a, const world& w) const;
 
         static double degrees_to_radians(double degrees);
         static double radians_to_degrees(double radians);
-
 };
 
 #endif

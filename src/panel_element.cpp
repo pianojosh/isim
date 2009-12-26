@@ -7,17 +7,17 @@
 #include <math.h>
 #include <vector>
 
-void panel_element::draw(const aircraft& a, const world& w)
+void panel_element::draw(const aircraft& a, const world& w) const
 {
     sdl_helper::normal_ellipse_color(x_position, y_position, x_size, y_size, sdl_helper::RED);
 }
 
-double panel_element::radius_for_theta(double theta)
+double panel_element::radius_for_theta(double theta) const
 {
     return (x_size * y_size) / sqrt(pow(x_size * sin(theta), 2) + pow(y_size * cos(theta), 2));
 }
 
-void panel_element::draw_needle(double x, double y, double theta, double length, double theta_offset, double length_offset, Uint32 color)
+void panel_element::draw_needle(double x, double y, double theta, double length, double theta_offset, double length_offset, Uint32 color) const
 {
     double xp[4];
     double yp[4];

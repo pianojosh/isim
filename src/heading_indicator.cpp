@@ -7,7 +7,7 @@
 #include <string>
 #include <math.h>
 
-void heading_indicator::draw(const aircraft& a, const world& w)
+void heading_indicator::draw(const aircraft& a, const world& w) const
 {
     sdl_helper::normal_ellipse_color(x_position, y_position, x_size, y_size, sdl_helper::WHITE);
     double heading = a.get_heading();

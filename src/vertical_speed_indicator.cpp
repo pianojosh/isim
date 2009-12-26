@@ -6,7 +6,7 @@
 #include "../include/sdl_helper.h"
 #include <math.h>
 
-void vertical_speed_indicator::draw(const aircraft& a, const world& w)
+void vertical_speed_indicator::draw(const aircraft& a, const world& w) const
 {
     const double standard_rate_angle = 45;
     const double standard_rate_climb = 500;

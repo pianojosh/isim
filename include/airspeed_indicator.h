@@ -17,7 +17,7 @@ class airspeed_indicator : public panel_element
             max_speed(hs)
         {}
 
-        virtual void draw(const aircraft& a, const world& w);
+        virtual void draw(const aircraft& a, const world& w) const;
 
         virtual ~airspeed_indicator() {}
 };

@@ -6,7 +6,7 @@
 
 #include <math.h>
 
-void attitude_indicator::draw(const aircraft& a, const world& w)
+void attitude_indicator::draw(const aircraft& a, const world& w) const
 {
     // special thanks to Rebecca Sobel for deriving the formulas for this
     // these can probably be simplified

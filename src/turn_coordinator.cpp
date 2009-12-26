@@ -6,7 +6,7 @@
 
 #include <math.h>
 
-void turn_coordinator::draw(const aircraft& a, const world& w)
+void turn_coordinator::draw(const aircraft& a, const world& w) const
 {
     const double standard_rate_angle = 30;
     const double standard_rate_turn = 3;

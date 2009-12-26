@@ -6,7 +6,7 @@
 
 #include <math.h>
 
-void altimeter::draw(const aircraft& a, const world& w)
+void altimeter::draw(const aircraft& a, const world& w) const
 {
     double alt = a.get_altitude();
     double thousands = (alt - ((int)(alt / 10000.0)) * 10000.0) / 1000.0;

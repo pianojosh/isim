@@ -64,6 +64,11 @@ void sdl_helper::fill_rect_color(int startx, int starty, int endx, int endy, Uin
     sge_FilledRect(surface, startx, starty, endx, endy, color);
 }
 
+void sdl_helper::normal_rect_color(double startx, double starty, double endx, double endy, Uint32 color)
+{
+    sge_Rect(surface, (int)(surface->w*startx), (int)(surface->h*starty), (int)(surface->w*endx), (int)(surface->h*endy), color);
+}
+
 void sdl_helper::normal_fill_rect_color(double startx, double starty, double endx, double endy, Uint32 color)
 {
     sge_FilledRect(surface, (int)(surface->w*startx), (int)(surface->h*starty), (int)(surface->w*endx), (int)(surface->h*endy), color);

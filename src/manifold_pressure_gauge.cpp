@@ -6,7 +6,7 @@
 #include "../include/sdl_helper.h"
 #include <math.h>
 
-void manifold_pressure_gauge::draw(const aircraft& a, const world& w)
+void manifold_pressure_gauge::draw(const aircraft& a, const world& w) const
 {
     const double max_power = 28;
     const double min_power = 15;

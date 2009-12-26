@@ -6,7 +6,7 @@
 
 #include <math.h>
 
-void airspeed_indicator::draw(const aircraft& a, const world& w)
+void airspeed_indicator::draw(const aircraft& a, const world& w) const
 {
     double theta = 2 * PI * (a.get_airspeed() - min_speed) / (max_speed - min_speed);
     if (theta < 0)

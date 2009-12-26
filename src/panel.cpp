@@ -14,6 +14,7 @@
 #include "../include/heading_indicator.h"
 #include "../include/vertical_speed_indicator.h"
 #include "../include/manifold_pressure_gauge.h"
+#include "../include/vor_receiver.h"
 
 #include <map>
 
@@ -27,6 +28,10 @@ void panel::initialize()
 
     double cur_x = start_x;
     double cur_y = start_y;
+
+    vor_receiver* vor1 = new vor_receiver(0.75, 0.3, 0.23, 0.1);
+    vor_receiver* vor2 = new vor_receiver(0.75, 0.45, 0.23, 0.1);
+    vor_receiver* vor3 = new vor_receiver(0.75, 0.6, 0.23, 0.1);
 
     for (int i = 1; i < 11; i++)
     {
@@ -51,6 +56,9 @@ void panel::initialize()
             VOR_2_RADIO = 13,
             ADF_RADIO = 14
         */
+
+
+
         switch (i)
         {
             case 1:
@@ -62,6 +70,9 @@ void panel::initialize()
             case 3:
                 elements[i] = new altimeter(cur_x, cur_y, size, size * y_correct);
             break;
+            case 4:
+                elements[i] = new cdi_gauge(cur_x, cur_y, size, size * y_correct, *vor1);
+            break;
             case 5:
                 elements[i] = new turn_coordinator(cur_x, cur_y, size, size * y_correct);
             break;
@@ -70,6 +81,9 @@ void panel::initialize()
             break;
             case 7:
                 elements[i] = new vertical_speed_indicator(cur_x, cur_y, size, size * y_correct);
+            break;
+            case 8:
+                elements[i] = new cdi_gauge(cur_x, cur_y, size, size * y_correct, *vor2);
             break;
             case 10:
                 elements[i] = new manifold_pressure_gauge(cur_x, cur_y, size, size * y_correct);
@@ -88,6 +102,10 @@ void panel::initialize()
             cur_y += inc * y_correct;
         }
     }
+
+    elements[12] = vor1;
+    elements[13] = vor2;
+    elements[14] = vor3;
 }
 
 void panel::draw(const aircraft& a, const world& w)
@@ -102,7 +120,7 @@ void panel::draw(const aircraft& a, const world& w)
         iter->second->draw(a, w);
     }
 
-    w.draw_moving_map(0.8, 0.8, 0.15, 0.15, a);
+    w.draw_moving_map(0.75, 0.75, 0.23, 0.23, a);
 }
 
 

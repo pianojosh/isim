@@ -14,16 +14,69 @@
 using std::cout;
 using std::endl;
 
+void isim_controller::initialize_keys_pressed()
+{
+    keys_pressed[SDLK_UP] = false;
+    keys_pressed[SDLK_DOWN] = false;
+    keys_pressed[SDLK_LEFT] = false;
+    keys_pressed[SDLK_RIGHT] = false;
+    keys_pressed[SDLK_z] = false;
+    keys_pressed[SDLK_x] = false;
+}
+
+void isim_controller::key_press_bank_left(isim_controller& c)
+{
+    c.isim_aircraft.set_bank_angle(c.isim_aircraft.get_bank_angle() - 0.12);
+}
+
+void isim_controller::key_press_bank_right(isim_controller& c)
+{
+    c.isim_aircraft.set_bank_angle(c.isim_aircraft.get_bank_angle() + 0.12);
+}
+
+void isim_controller::key_press_power_down(isim_controller& c)
+{
+    double new_power_setting = c.isim_aircraft.get_power_setting() - 0.01;
+    if (new_power_setting < 15)
+    {
+        new_power_setting = 15;
+    }
+    c.isim_aircraft.set_power_setting(new_power_setting);
+}
+
+void isim_controller::key_press_power_up(isim_controller& c)
+{
+    double new_power_setting = c.isim_aircraft.get_power_setting() + 0.01;
+    if (new_power_setting > 28)
+    {
+        new_power_setting = 28;
+    }
+    c.isim_aircraft.set_power_setting(new_power_setting);
+}
+
+void isim_controller::key_press_pitch_down(isim_controller& c)
+{
+    c.isim_aircraft.set_pitch_angle(c.isim_aircraft.get_pitch_angle() - 0.05);
+}
+
+void isim_controller::key_press_pitch_up(isim_controller& c)
+{
+    c.isim_aircraft.set_pitch_angle(c.isim_aircraft.get_pitch_angle() + 0.05);
+}
+
+void isim_controller::initialize_key_actions()
+{
+    key_actions[SDLK_UP] = key_press_pitch_down;
+    key_actions[SDLK_DOWN] = key_press_pitch_up;
+    key_actions[SDLK_LEFT] = key_press_bank_left;
+    key_actions[SDLK_RIGHT] = key_press_bank_right;
+    key_actions[SDLK_z] = key_press_power_down;
+    key_actions[SDLK_x] = key_press_power_up;
+}
+
 void isim_controller::run()
 {
     bool done = false;
-
-    bool up_pressed = false;
-    bool down_pressed = false;
-    bool right_pressed = false;
-    bool left_pressed = false;
-    bool z_pressed = false;
-    bool x_pressed = false;
 
     while (!done)
     {
@@ -47,94 +100,32 @@ void isim_controller::run()
                         case SDLK_ESCAPE:
                             done = true;
                         break;
-                        case SDLK_UP:
-                            up_pressed = true;
-                        break;
-                        case SDLK_DOWN:
-                            down_pressed = true;
-                        break;
-                        case SDLK_LEFT:
-                            left_pressed = true;
-                        break;
-                        case SDLK_RIGHT:
-                            right_pressed = true;
-                        break;
-                        case SDLK_z:
-                            z_pressed = true;
-                        break;
-                        case SDLK_x:
-                            x_pressed = true;
-                        break;
                         default:
-                            //
+                            if (keys_pressed.count(event.key.keysym.sym) > 0)
+                            {
+                                keys_pressed[event.key.keysym.sym] = true;
+                            }
                         break;
                     }
                 break;
 
                 case SDL_KEYUP:
-                    switch (event.key.keysym.sym)
+                    if (keys_pressed.count(event.key.keysym.sym) > 0)
                     {
-                        case SDLK_UP:
-                            up_pressed = false;
-                        break;
-                        case SDLK_DOWN:
-                            down_pressed = false;
-                        break;
-                        case SDLK_LEFT:
-                            left_pressed = false;
-                        break;
-                        case SDLK_RIGHT:
-                            right_pressed = false;
-                        break;
-                        case SDLK_z:
-                            z_pressed = false;
-                        break;
-                        case SDLK_x:
-                            x_pressed = false;
-                        break;
-                        default:
-                            //
-                        break;
-
+                        keys_pressed[event.key.keysym.sym] = false;
                     }
                 break;
 
             }
         }
 
-        if (up_pressed)
+        map<int, bool>::iterator i;
+        for (i = keys_pressed.begin(); i != keys_pressed.end(); i++)
         {
-            isim_aircraft.set_pitch_angle(isim_aircraft.get_pitch_angle() - 0.05);
-        }
-        else if (down_pressed)
-        {
-            isim_aircraft.set_pitch_angle(isim_aircraft.get_pitch_angle() + 0.05);
-        }
-        if (left_pressed)
-        {
-            isim_aircraft.set_bank_angle(isim_aircraft.get_bank_angle() - 0.12);
-        }
-        else if (right_pressed)
-        {
-            isim_aircraft.set_bank_angle(isim_aircraft.get_bank_angle() + 0.12);
-        }
-        if (z_pressed)
-        {
-            double new_power_setting = isim_aircraft.get_power_setting() - 0.01;
-            if (new_power_setting < 15)
+            if (i->second)
             {
-                new_power_setting = 15;
+                key_actions[i->first](*this);
             }
-            isim_aircraft.set_power_setting(new_power_setting);
-        }
-        else if (x_pressed)
-        {
-            double new_power_setting = isim_aircraft.get_power_setting() + 0.01;
-            if (new_power_setting > 28)
-            {
-                new_power_setting = 28;
-            }
-            isim_aircraft.set_power_setting(new_power_setting);
         }
 
         step();
@@ -203,6 +194,9 @@ void isim_controller::initialize()
     isim_aircraft.set_power_setting(25);
     isim_aircraft.set_x_position(-71.2890300);
     isim_aircraft.set_y_position(42.4699531);
+
+    initialize_keys_pressed();
+    initialize_key_actions();
 }
 
 void isim_controller::initialize_video()

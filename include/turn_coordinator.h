@@ -11,7 +11,7 @@ class turn_coordinator : public panel_element
             panel_element(xpos, ypos, xsz, ysz)
         {}
 
-        virtual void draw(const aircraft& a, const world& w);
+        virtual void draw(const aircraft& a, const world& w) const;
         virtual ~turn_coordinator() {}
 };
 

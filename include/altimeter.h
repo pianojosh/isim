@@ -11,7 +11,7 @@ class altimeter : public panel_element
         {}
         virtual ~altimeter() {}
 
-        virtual void draw(const aircraft& a, const world& w);
+        virtual void draw(const aircraft& a, const world& w) const;
 };
 
 #endif

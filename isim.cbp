@@ -55,6 +55,7 @@
 		<Unit filename="include\altimeter.h" />
 		<Unit filename="include\attitude_indicator.h" />
 		<Unit filename="include\cdi_gauge.h" />
+		<Unit filename="include\cdi_information.h" />
 		<Unit filename="include\ground_object.h" />
 		<Unit filename="include\heading_indicator.h" />
 		<Unit filename="include\ils.h" />
@@ -76,6 +77,7 @@
 		<Unit filename="src\airspeed_indicator.cpp" />
 		<Unit filename="src\altimeter.cpp" />
 		<Unit filename="src\attitude_indicator.cpp" />
+		<Unit filename="src\cdi_gauge.cpp" />
 		<Unit filename="src\ground_object.cpp" />
 		<Unit filename="src\heading_indicator.cpp" />
 		<Unit filename="src\isim_controller.cpp" />
