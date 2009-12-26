@@ -45,6 +45,16 @@ class isim_controller
         static void key_press_bank_right(isim_controller& c);
         static void key_press_power_down(isim_controller& c);
         static void key_press_power_up(isim_controller& c);
+        static void key_press_vor1_broad_freq_up(isim_controller& c);
+        static void key_press_vor1_broad_freq_down(isim_controller& c);
+        static void key_press_vor1_fine_freq_up(isim_controller& c);
+        static void key_press_vor1_fine_freq_down(isim_controller& c);
+        static void key_press_vor1_swap_frequencies(isim_controller& c);
+        static void key_press_vor2_broad_freq_up(isim_controller& c);
+        static void key_press_vor2_broad_freq_down(isim_controller& c);
+        static void key_press_vor2_fine_freq_up(isim_controller& c);
+        static void key_press_vor2_fine_freq_down(isim_controller& c);
+        static void key_press_vor2_swap_frequencies(isim_controller& c);
 
     public:
         isim_controller() {}

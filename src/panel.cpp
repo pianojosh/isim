@@ -18,6 +18,29 @@
 
 #include <map>
 
+void panel::set_vor_frequency(int v, int f)
+{
+    int key = (v == 1 ? VOR_1_RADIO : VOR_2_RADIO);
+    vor_receiver& r = dynamic_cast<vor_receiver&>(*elements[key]);
+    r.set_standby_frequency(f);
+}
+
+int panel::get_vor_frequency(int v) const
+{
+    int key = (v == 1 ? VOR_1_RADIO : VOR_2_RADIO);
+    //syntax is annoying, but std::map's operator[] doesn't have a const version
+    vor_receiver& r = dynamic_cast<vor_receiver&>(*elements.find(key)->second);
+    return r.get_standby_frequency();
+}
+
+void panel::swap_vor_frequencies(int v)
+{
+    int key = (v == 1 ? VOR_1_RADIO : VOR_2_RADIO);
+    vor_receiver& r = dynamic_cast<vor_receiver&>(*elements[key]);
+    r.swap_frequencies();
+}
+
+
 void panel::initialize()
 {
     double start_x = 0.1;
@@ -39,25 +62,6 @@ void panel::initialize()
         {
             cur_x += inc;
         }
-
-        /*
-            AIRSPEED_INDICATOR = 1,
-            ATTITUDE_INDICATOR = 2,
-            ALTIMETER = 3,
-            VOR_1_CDI = 4,
-            TURN_COORDINATOR = 5,
-            HEADING_INDICATOR = 6,
-            VERTICAL_SPEED_INDICATOR = 7,
-            VOR_2_CDI = 8,
-            ADF_GAUGE = 9,
-            MANIFOLD_PRESSURE_GAUGE = 10,
-            MARKER_RADIO = 11,
-            VOR_1_RADIO = 12,
-            VOR_2_RADIO = 13,
-            ADF_RADIO = 14
-        */
-
-
 
         switch (i)
         {

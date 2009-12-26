@@ -66,6 +66,8 @@ class aircraft
         void set_bank_angle(double b);
         void set_power_setting(double p);
 
+
+
         static double nautical_miles_per_degree_latitude_at_degrees_latitude(double degrees_latitude);
         static double nautical_miles_per_degree_longitude_at_degrees_latitude(double degrees_latitude);
 

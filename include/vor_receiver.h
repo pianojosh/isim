@@ -23,6 +23,10 @@ class vor_receiver : public panel_element
             standby_frequency(11440)
         {}
 
+        int get_standby_frequency() const;
+        void set_standby_frequency(int f);
+        void swap_frequencies();
+
         virtual void draw(const aircraft& a, const world& w) const;
 
         cdi_information get_deviation(int selected_heading, const aircraft& a, const world& w) const;

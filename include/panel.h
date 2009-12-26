@@ -36,6 +36,10 @@ class panel
 
         void initialize();
         void draw(const aircraft& a, const world& w);
+
+        int get_vor_frequency(int vor_number) const;
+        void set_vor_frequency(int vor_number, int frequency);
+        void swap_vor_frequencies(int vor_number);
 };
 
 #endif

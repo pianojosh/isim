@@ -10,6 +10,22 @@
 
 #include <math.h>
 
+int vor_receiver::get_standby_frequency() const
+{
+    return standby_frequency;
+}
+
+void vor_receiver::set_standby_frequency(int f)
+{
+    standby_frequency = f;
+}
+
+void vor_receiver::swap_frequencies()
+{
+    int t = standby_frequency;
+    standby_frequency = active_frequency;
+    active_frequency = t;
+}
 
 void vor_receiver::draw(const aircraft& a, const world& w) const
 {
