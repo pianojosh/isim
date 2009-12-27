@@ -16,38 +16,135 @@
 using std::cout;
 using std::endl;
 
-void isim_controller::initialize_keys_pressed()
-{
-    keys_pressed[SDLK_UP] = false;
-    keys_pressed[SDLK_DOWN] = false;
-    keys_pressed[SDLK_LEFT] = false;
-    keys_pressed[SDLK_RIGHT] = false;
-    keys_pressed[SDLK_z] = false;
-    keys_pressed[SDLK_x] = false;
-    keys_pressed[SDLK_RIGHTBRACKET] = false;
-    keys_pressed[SDLK_LEFTBRACKET] = false;
-    keys_pressed[SDLK_p] = false;
-    keys_pressed[SDLK_o] = false;
-    keys_pressed[SDLK_i] = false;
-    keys_pressed[SDLK_y] = false;
-    keys_pressed[SDLK_u] = false;
-}
-
 void isim_controller::initialize_key_actions()
 {
-    key_actions[SDLK_UP] = key_press_pitch_down;
-    key_actions[SDLK_DOWN] = key_press_pitch_up;
-    key_actions[SDLK_LEFT] = key_press_bank_left;
-    key_actions[SDLK_RIGHT] = key_press_bank_right;
-    key_actions[SDLK_z] = key_press_power_down;
-    key_actions[SDLK_x] = key_press_power_up;
+    key_actions[SDLK_w] = key_press_pitch_down;
+    key_actions[SDLK_s] = key_press_pitch_up;
+    key_actions[SDLK_a] = key_press_bank_left;
+    key_actions[SDLK_d] = key_press_bank_right;
+    key_actions[SDLK_q] = key_press_power_down;
+    key_actions[SDLK_e] = key_press_power_up;
+
     key_actions[SDLK_RIGHTBRACKET] = key_press_vor1_broad_freq_up;
     key_actions[SDLK_LEFTBRACKET] = key_press_vor1_fine_freq_up;
     key_actions[SDLK_p] = key_press_vor1_fine_freq_down;
     key_actions[SDLK_o] = key_press_vor1_broad_freq_down;
     key_actions[SDLK_i] = key_press_vor1_swap_frequencies;
-    key_actions[SDLK_y] = key_press_cdi1_course_left;
     key_actions[SDLK_u] = key_press_cdi1_course_right;
+    key_actions[SDLK_y] = key_press_cdi1_course_left;
+
+    key_actions[SDLK_QUOTE] = key_press_vor2_broad_freq_up;
+    key_actions[SDLK_SEMICOLON] = key_press_vor2_fine_freq_up;
+    key_actions[SDLK_l] = key_press_vor2_fine_freq_down;
+    key_actions[SDLK_k] = key_press_vor2_broad_freq_down;
+    key_actions[SDLK_j] = key_press_vor2_swap_frequencies;
+    key_actions[SDLK_h] = key_press_cdi2_course_right;
+    key_actions[SDLK_g] = key_press_cdi2_course_left;
+
+    map<int, void(*)(isim_controller&)>::iterator i;
+    for (i = key_actions.begin(); i != key_actions.end(); i++)
+    {
+        keys_pressed[i->first] = false;
+        key_delay[i->first] = 0;
+        delay_values[i->first] = 0;
+    }
+    delay_values[SDLK_RIGHTBRACKET] = 250;
+    delay_values[SDLK_LEFTBRACKET] = 250;
+    delay_values[SDLK_p] = 250;
+    delay_values[SDLK_o] = 250;
+    delay_values[SDLK_i] = 10000;
+    delay_values[SDLK_u] = 25;
+    delay_values[SDLK_y] = 25;
+
+    delay_values[SDLK_QUOTE] = 250;
+    delay_values[SDLK_SEMICOLON] = 250;
+    delay_values[SDLK_l] = 250;
+    delay_values[SDLK_k] = 250;
+    delay_values[SDLK_j] = 10000;
+    delay_values[SDLK_h] = 25;
+    delay_values[SDLK_g] = 25;
+
+}
+
+void isim_controller::key_press_cdi2_course_left(isim_controller& c)
+{
+    cdi_gauge& g = dynamic_cast<cdi_gauge&>(c.isim_panel.get_element(panel::VOR_2_CDI));
+    int course = g.get_selected_course();
+    course--;
+    if (course <= 0)
+    {
+        course = 360;
+    }
+    g.set_selected_course(course);
+}
+
+void isim_controller::key_press_cdi2_course_right(isim_controller& c)
+{
+    cdi_gauge& g = dynamic_cast<cdi_gauge&>(c.isim_panel.get_element(panel::VOR_2_CDI));
+    int course = g.get_selected_course();
+    course++;
+    if (course > 360)
+    {
+        course = 1;
+    }
+    g.set_selected_course(course);
+}
+
+void isim_controller::key_press_vor2_broad_freq_down(isim_controller& c)
+{
+    int freq = c.isim_panel.get_vor_frequency(2);
+    int freq_fine = freq % 100;
+    int freq_broad = 100 * (freq / 100);
+    freq_broad -= 100;
+    if (freq_broad < 10800)
+    {
+        freq_broad = 11700;
+    }
+    c.isim_panel.set_vor_frequency(2, freq_broad + freq_fine);
+}
+
+void isim_controller::key_press_vor2_broad_freq_up(isim_controller& c)
+{
+    int freq = c.isim_panel.get_vor_frequency(2);
+    int freq_fine = freq % 100;
+    int freq_broad = 100 * (freq / 100);
+    freq_broad += 100;
+    if (freq_broad > 11700)
+    {
+        freq_broad = 10800;
+    }
+    c.isim_panel.set_vor_frequency(2, freq_broad + freq_fine);
+}
+
+void isim_controller::key_press_vor2_fine_freq_down(isim_controller& c)
+{
+    int freq = c.isim_panel.get_vor_frequency(2);
+    int freq_fine = freq % 100;
+    int freq_broad = 100 * (freq / 100);
+    freq_fine -= 5;
+    if (freq_fine < 0)
+    {
+        freq_fine = 95;
+    }
+    c.isim_panel.set_vor_frequency(2, freq_broad + freq_fine);
+}
+
+void isim_controller::key_press_vor2_fine_freq_up(isim_controller& c)
+{
+    int freq = c.isim_panel.get_vor_frequency(2);
+    int freq_fine = freq % 100;
+    int freq_broad = 100 * (freq / 100);
+    freq_fine += 5;
+    if (freq_fine > 95)
+    {
+        freq_fine = 0;
+    }
+    c.isim_panel.set_vor_frequency(2, freq_broad + freq_fine);
+}
+
+void isim_controller::key_press_vor2_swap_frequencies(isim_controller& c)
+{
+    c.isim_panel.swap_vor_frequencies(2);
 }
 
 void isim_controller::key_press_cdi1_course_left(isim_controller& c)
@@ -85,7 +182,6 @@ void isim_controller::key_press_vor1_broad_freq_down(isim_controller& c)
         freq_broad = 11700;
     }
     c.isim_panel.set_vor_frequency(1, freq_broad + freq_fine);
-    c.keys_pressed[SDLK_o] = false;
 }
 
 void isim_controller::key_press_vor1_broad_freq_up(isim_controller& c)
@@ -99,7 +195,6 @@ void isim_controller::key_press_vor1_broad_freq_up(isim_controller& c)
         freq_broad = 10800;
     }
     c.isim_panel.set_vor_frequency(1, freq_broad + freq_fine);
-    c.keys_pressed[SDLK_RIGHTBRACKET] = false;
 }
 
 void isim_controller::key_press_vor1_fine_freq_down(isim_controller& c)
@@ -113,7 +208,6 @@ void isim_controller::key_press_vor1_fine_freq_down(isim_controller& c)
         freq_fine = 95;
     }
     c.isim_panel.set_vor_frequency(1, freq_broad + freq_fine);
-    c.keys_pressed[SDLK_p] = false;
 }
 
 void isim_controller::key_press_vor1_fine_freq_up(isim_controller& c)
@@ -127,13 +221,11 @@ void isim_controller::key_press_vor1_fine_freq_up(isim_controller& c)
         freq_fine = 0;
     }
     c.isim_panel.set_vor_frequency(1, freq_broad + freq_fine);
-    c.keys_pressed[SDLK_LEFTBRACKET] = false;
 }
 
 void isim_controller::key_press_vor1_swap_frequencies(isim_controller& c)
 {
     c.isim_panel.swap_vor_frequencies(1);
-    c.keys_pressed[SDLK_i] = false;
 }
 
 void isim_controller::key_press_bank_left(isim_controller& c)
@@ -215,6 +307,7 @@ void isim_controller::run()
                     if (keys_pressed.count(event.key.keysym.sym) > 0)
                     {
                         keys_pressed[event.key.keysym.sym] = false;
+                        key_delay[event.key.keysym.sym] = 0;
                     }
                 break;
 
@@ -224,9 +317,10 @@ void isim_controller::run()
         map<int, bool>::iterator i;
         for (i = keys_pressed.begin(); i != keys_pressed.end(); i++)
         {
-            if (i->second)
+            if (i->second && !(key_delay[i->first]))
             {
                 key_actions[i->first](*this);
+                key_delay[i->first] = delay_values[i->first];
             }
         }
 
@@ -251,6 +345,23 @@ void isim_controller::step()
         {
             isim_aircraft.simulate(step_millis);
             last_tick = this_tick;
+            decrease_key_delays(step_millis);
+        }
+    }
+}
+
+void isim_controller::decrease_key_delays(int step_millis)
+{
+    map<int, int>::iterator i;
+    for (i = key_delay.begin(); i != key_delay.end(); i++)
+    {
+        if (i->second)
+        {
+            i->second -= step_millis;
+            if (i->second < 0)
+            {
+                i->second = 0;
+            }
         }
     }
 }
@@ -297,7 +408,6 @@ void isim_controller::initialize()
     isim_aircraft.set_x_position(-71.2890300);
     isim_aircraft.set_y_position(42.4699531);
 
-    initialize_keys_pressed();
     initialize_key_actions();
 }
 

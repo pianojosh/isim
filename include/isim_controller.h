@@ -29,6 +29,8 @@ class isim_controller
 
         map<int, bool> keys_pressed;
         map<int, void(*)(isim_controller&) > key_actions;
+        map<int, int> key_delay;
+        map<int, int> delay_values;
 
         void initialize_video();
 
@@ -36,6 +38,7 @@ class isim_controller
         void draw();
         void initialize_keys_pressed();
         void initialize_key_actions();
+        void decrease_key_delays(int step_millis);
 
         Uint32 last_frame_tick;
 
@@ -57,6 +60,10 @@ class isim_controller
         static void key_press_vor2_swap_frequencies(isim_controller& c);
         static void key_press_cdi1_course_left(isim_controller& c);
         static void key_press_cdi1_course_right(isim_controller& c);
+        static void key_press_cdi2_course_left(isim_controller& c);
+        static void key_press_cdi2_course_right(isim_controller& c);
+
+
 
     public:
         isim_controller() {}
