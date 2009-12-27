@@ -3,6 +3,8 @@
 
 #include "../include/isim_controller.h"
 #include "../include/sdl_helper.h"
+#include "../include/cdi_gauge.h"
+#include "../include/panel.h"
 
 #include <iostream>
 #include <string>
@@ -27,6 +29,8 @@ void isim_controller::initialize_keys_pressed()
     keys_pressed[SDLK_p] = false;
     keys_pressed[SDLK_o] = false;
     keys_pressed[SDLK_i] = false;
+    keys_pressed[SDLK_y] = false;
+    keys_pressed[SDLK_u] = false;
 }
 
 void isim_controller::initialize_key_actions()
@@ -42,6 +46,32 @@ void isim_controller::initialize_key_actions()
     key_actions[SDLK_p] = key_press_vor1_fine_freq_down;
     key_actions[SDLK_o] = key_press_vor1_broad_freq_down;
     key_actions[SDLK_i] = key_press_vor1_swap_frequencies;
+    key_actions[SDLK_y] = key_press_cdi1_course_left;
+    key_actions[SDLK_u] = key_press_cdi1_course_right;
+}
+
+void isim_controller::key_press_cdi1_course_left(isim_controller& c)
+{
+    cdi_gauge& g = dynamic_cast<cdi_gauge&>(c.isim_panel.get_element(panel::VOR_1_CDI));
+    int course = g.get_selected_course();
+    course--;
+    if (course <= 0)
+    {
+        course = 360;
+    }
+    g.set_selected_course(course);
+}
+
+void isim_controller::key_press_cdi1_course_right(isim_controller& c)
+{
+    cdi_gauge& g = dynamic_cast<cdi_gauge&>(c.isim_panel.get_element(panel::VOR_1_CDI));
+    int course = g.get_selected_course();
+    course++;
+    if (course > 360)
+    {
+        course = 1;
+    }
+    g.set_selected_course(course);
 }
 
 void isim_controller::key_press_vor1_broad_freq_down(isim_controller& c)

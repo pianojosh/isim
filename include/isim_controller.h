@@ -55,6 +55,8 @@ class isim_controller
         static void key_press_vor2_fine_freq_up(isim_controller& c);
         static void key_press_vor2_fine_freq_down(isim_controller& c);
         static void key_press_vor2_swap_frequencies(isim_controller& c);
+        static void key_press_cdi1_course_left(isim_controller& c);
+        static void key_press_cdi1_course_right(isim_controller& c);
 
     public:
         isim_controller() {}

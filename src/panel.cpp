@@ -18,6 +18,11 @@
 
 #include <map>
 
+panel_element& panel::get_element(int e)
+{
+    return *elements[e];
+}
+
 void panel::set_vor_frequency(int v, int f)
 {
     int key = (v == 1 ? VOR_1_RADIO : VOR_2_RADIO);

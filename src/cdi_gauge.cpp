@@ -11,7 +11,7 @@ void cdi_gauge::draw(const aircraft& a, const world& w) const
     const double MAX_DEFLECTION_DEVIATION = 10.0;
     const double MAX_DEFLECTION_ANGLE = 25.0;
 
-    cdi_information deviation_info = receiver.get_deviation(20, a, w);
+    cdi_information deviation_info = receiver.get_deviation(selected_course, a, w);
 
     sdl_helper::normal_ellipse_color(x_position, y_position, x_size, y_size, sdl_helper::WHITE);
 
@@ -21,8 +21,8 @@ void cdi_gauge::draw(const aircraft& a, const world& w) const
     }
     else
     {
+        sdl_helper::normal_text(x_position, y_position - y_size * 0.75, sdl_helper::to_string(selected_course));
         sdl_helper::normal_text(x_position, y_position, sdl_helper::to_string(deviation_info.deviation));
-        sdl_helper::normal_text(x_position, y_position + y_size * 0.2, sdl_helper::to_string(deviation_info.direction));
         sdl_helper::normal_text(
             x_position,
             y_position + y_size * 0.4,

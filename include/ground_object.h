@@ -35,6 +35,7 @@ class ground_object
 
         virtual double get_x_position() const;
         virtual double get_y_position() const;
+        virtual int get_variation() const;
 
         static int compare_by_x_dimension(ground_object* l, ground_object* r);
         static int compare_by_y_dimension(ground_object* l, ground_object* r);

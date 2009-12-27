@@ -47,4 +47,9 @@ double ground_object::moving_map_size_factor() const
     return 0.025;
 }
 
+int ground_object::get_variation() const
+{
+    return variation;
+}
+
 #endif

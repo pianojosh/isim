@@ -63,8 +63,6 @@ void aircraft::simulate(int step_millis)
 
     x_position += x_delta / xmpd;
     y_position += y_delta / ympd;
-
-
 }
 
 double aircraft::get_airspeed() const

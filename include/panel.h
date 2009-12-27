@@ -14,6 +14,18 @@ class panel
     private:
         map<int, panel_element*> elements;
 
+    public:
+        panel() {}
+
+        void initialize();
+        void draw(const aircraft& a, const world& w);
+
+        int get_vor_frequency(int vor_number) const;
+        void set_vor_frequency(int vor_number, int frequency);
+        void swap_vor_frequencies(int vor_number);
+
+        panel_element& get_element(int element_number);
+
         enum {
             AIRSPEED_INDICATOR = 1,
             ATTITUDE_INDICATOR = 2,
@@ -31,15 +43,6 @@ class panel
             ADF_RADIO = 14
         };
 
-    public:
-        panel() {}
-
-        void initialize();
-        void draw(const aircraft& a, const world& w);
-
-        int get_vor_frequency(int vor_number) const;
-        void set_vor_frequency(int vor_number, int frequency);
-        void swap_vor_frequencies(int vor_number);
 };
 
 #endif
