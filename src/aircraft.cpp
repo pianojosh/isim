@@ -61,6 +61,7 @@ void aircraft::simulate(int step_millis)
     double xmpd = nautical_miles_per_degree_latitude_at_degrees_latitude(y_position);
     double ympd = nautical_miles_per_degree_longitude_at_degrees_latitude(y_position);
 
+    //todo: this is not variance-corrected
     x_position += x_delta / xmpd;
     y_position += y_delta / ympd;
 }
