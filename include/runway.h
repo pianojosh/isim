@@ -2,6 +2,7 @@
 #define __RUNWAY_H
 
 #include <string>
+#include "../include/ground_object.h"
 
 using std::string;
 

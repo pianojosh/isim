@@ -40,6 +40,7 @@ class sdl_helper
         static Uint32 BLUE;
         static Uint32 BROWN;
         static Uint32 BLACK;
+        static Uint32 PURPLE;
 //        static double PI;
 
     private:

@@ -43,7 +43,7 @@ class aircraft
             climb_rate(0)
         {}
 
-        void simulate(int step_millis);
+        void simulate(int step_millis, int variance);
 
         double get_x_position() const;
         double get_y_position() const;

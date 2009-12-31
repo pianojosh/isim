@@ -8,10 +8,28 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <math.h>
 
 using std::vector;
 using std::cout;
 using std::endl;
+
+int world::get_nearest_variance(double x_position, double y_position) const
+{
+    ground_object const* closest_object = objects[0];
+    double closest_distance = sqrt(pow(x_position - closest_object->get_x_position(), 2) + pow(y_position - closest_object->get_y_position(), 2));
+
+    for (unsigned int i = 1; i < objects.size(); i++)
+    {
+        double this_distance = sqrt(pow(x_position - objects[i]->get_x_position(), 2) + pow(y_position - objects[i]->get_y_position(), 2));
+        if (this_distance < closest_distance)
+        {
+            closest_object = objects[i];
+            closest_distance = this_distance;
+        }
+    }
+    return closest_object->get_variation();
+}
 
 const vor& world::get_vor_by_frequency(int vor_frequency) const
 {

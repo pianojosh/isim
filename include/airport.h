@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+using std::vector;
+
 class airport : public ground_object
 {
     private:
@@ -19,6 +21,8 @@ class airport : public ground_object
             size(s)
         {}
         virtual ~airport() {}
+
+        virtual void draw_moving_map_symbol(double xpos, double ypos, double xsize, double ysize) const;
 };
 
 #endif

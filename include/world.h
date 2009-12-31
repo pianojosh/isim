@@ -47,6 +47,7 @@ class world
         void finalize_objects();
 
         const vor& get_vor_by_frequency(int vor_frequency) const;
+        int get_nearest_variance(double x_position, double y_position) const;
 
         void draw_moving_map(double xpos, double ypos, double xsize, double ysize, const aircraft& a) const;
 

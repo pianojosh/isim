@@ -74,6 +74,7 @@
 		<Unit filename="include\vor_receiver.h" />
 		<Unit filename="include\world.h" />
 		<Unit filename="src\aircraft.cpp" />
+		<Unit filename="src\airport.cpp" />
 		<Unit filename="src\airspeed_indicator.cpp" />
 		<Unit filename="src\altimeter.cpp" />
 		<Unit filename="src\attitude_indicator.cpp" />

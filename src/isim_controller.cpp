@@ -5,6 +5,7 @@
 #include "../include/sdl_helper.h"
 #include "../include/cdi_gauge.h"
 #include "../include/panel.h"
+#include "../include/airport.h"
 
 #include <iostream>
 #include <string>
@@ -138,7 +139,7 @@ void isim_controller::key_press_vor2_fine_freq_up(isim_controller& c)
     if (freq_fine > 95)
     {
         freq_fine = 0;
-    }
+        }
     c.isim_panel.set_vor_frequency(2, freq_broad + freq_fine);
 }
 
@@ -343,7 +344,8 @@ void isim_controller::step()
         int step_millis = (int)((double)(this_tick - last_tick) / (CLOCKS_PER_SEC / 1000.0));
         if (step_millis > 0)
         {
-            isim_aircraft.simulate(step_millis);
+            int variance = isim_world.get_nearest_variance(isim_aircraft.get_x_position(), isim_aircraft.get_y_position());
+            isim_aircraft.simulate(step_millis, variance);
             last_tick = this_tick;
             decrease_key_delays(step_millis);
         }
@@ -386,17 +388,20 @@ void isim_controller::initialize()
         43.1571638
     );
 
-    vor* v1 = new vor(-70.9895472, 42.3574500, 20, -16, "BOS", 11270);
-    vor* v2 = new vor(-71.0948419, 42.7404156, 302, -15, "LWM", 11250);
-    vor* v3 = new vor(-71.3695447, 42.8685317, 469, -15, "MHT", 11440);
-    vor* v4 = new vor(-70.8319867, 43.0844625, 99, -16, "PSM", 11650);
-    vor* v5 = new vor(-72.0581889, 42.5459500, 1280, -14, "GDM", 11060);
+    vor* bos = new vor(-70.9895472, 42.3574500, 20, -16, "BOS", 11270);
+    vor* lwm = new vor(-71.0948419, 42.7404156, 302, -15, "LWM", 11250);
+    vor* mht = new vor(-71.3695447, 42.8685317, 469, -15, "MHT", 11440);
+    vor* psm = new vor(-70.8319867, 43.0844625, 99, -16, "PSM", 11650);
+    vor* gdm = new vor(-72.0581889, 42.5459500, 1280, -14, "GDM", 11060);
 
-    isim_world.add_object(v1);
-    isim_world.add_object(v2);
-    isim_world.add_object(v3);
-    isim_world.add_object(v4);
-    isim_world.add_object(v5);
+    airport* kbed = new airport(-71.2890300, 42.4699531, 133, -16, "KBED", 1.5);
+
+    isim_world.add_object(bos);
+    isim_world.add_object(lwm);
+    isim_world.add_object(mht);
+    isim_world.add_object(psm);
+    isim_world.add_object(gdm);
+    isim_world.add_object(kbed);
 
     isim_world.finalize_objects();
 

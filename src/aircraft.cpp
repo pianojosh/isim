@@ -7,7 +7,7 @@
 #include <iostream>
 #include <math.h>
 
-void aircraft::simulate(int step_millis)
+void aircraft::simulate(int step_millis, int variance)
 {
     // most of these are try-and-tweak
     const double AIRSPEED_TURN_FACTOR = 1.5;
@@ -53,15 +53,26 @@ void aircraft::simulate(int step_millis)
         pitch_angle -= (STALL_SPEED - airspeed) * AIRSPEED_STALL_FACTOR;
     }
 
-    double x_knots = airspeed * cos(panel_element::degrees_to_radians(heading - 90.0));
-    double y_knots = airspeed * -sin(panel_element::degrees_to_radians(heading - 90.0));
+    // this is not supposed to have the / 2.0 in it, so something's wrong with the math somewhere.
+    //  probably worth finding out where the mixup is.
+    double true_heading = heading + (double)variance / 2.0;
+    if (true_heading > 360)
+    {
+        true_heading -= 360;
+    }
+    if (true_heading <= 0)
+    {
+        true_heading += 360;
+    }
+
+    double x_knots = airspeed * cos(panel_element::degrees_to_radians(true_heading - 90.0));
+    double y_knots = airspeed * -sin(panel_element::degrees_to_radians(true_heading - 90.0));
     double x_delta = step_millis * x_knots / (60.0 * 60.0 * 1000.0);
     double y_delta = step_millis * y_knots / (60.0 * 60.0 * 1000.0);
 
     double xmpd = nautical_miles_per_degree_latitude_at_degrees_latitude(y_position);
     double ympd = nautical_miles_per_degree_longitude_at_degrees_latitude(y_position);
 
-    //todo: this is not variance-corrected
     x_position += x_delta / xmpd;
     y_position += y_delta / ympd;
 }

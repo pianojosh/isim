@@ -29,6 +29,7 @@ Uint32 sdl_helper::GREEN = 0;
 Uint32 sdl_helper::BLUE = 0;
 Uint32 sdl_helper::BLACK = 0;
 Uint32 sdl_helper::BROWN = 0;
+Uint32 sdl_helper::PURPLE = 0;
 
 std::string sdl_helper::to_string(double x)
 {
@@ -145,6 +146,7 @@ void sdl_helper::initialize()
     BLUE = color_for_screen(0, 0, 255);
     BLACK = color_for_screen(0, 0, 0);
     BROWN = color_for_screen(175, 175, 127);
+    PURPLE = color_for_screen(255, 0, 255);
 
     sgefont = sge_BF_OpenFont("font.bmp", SGE_BFTRANSP);
     sge_BF_SetColor(sgefont, 255, 255, 255);

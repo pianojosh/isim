@@ -38,8 +38,10 @@ int ground_object::compare_by_y_dimension(ground_object* l, ground_object* r)
 
 void ground_object::draw_moving_map_symbol(double xpos, double ypos, double xsize, double ysize) const
 {
+    xsize *= moving_map_size_factor();
+    ysize *= moving_map_size_factor();
     Uint32 color = sdl_helper::GREEN;
-    sdl_helper::normal_fill_rect_color(xpos, ypos, xpos+xsize, ypos+ysize, color);
+    sdl_helper::normal_fill_rect_color(xpos, ypos, xpos + xsize, ypos + ysize, color);
 }
 
 double ground_object::moving_map_size_factor() const
