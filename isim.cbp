@@ -82,6 +82,7 @@
 		<Unit filename="src\ground_object.cpp" />
 		<Unit filename="src\heading_indicator.cpp" />
 		<Unit filename="src\isim_controller.cpp" />
+		<Unit filename="src\localizer.cpp" />
 		<Unit filename="src\main.cpp" />
 		<Unit filename="src\manifold_pressure_gauge.cpp" />
 		<Unit filename="src\panel.cpp" />
