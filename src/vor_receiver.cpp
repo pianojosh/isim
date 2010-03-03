@@ -54,7 +54,7 @@ void vor_receiver::draw(const aircraft& a, const world& w) const
 cdi_information vor_receiver::get_deviation(int selected_radial, const aircraft& a, const world& w) const
 {
     cdi_information r;
-    vor v = w.get_vor_by_frequency(active_frequency);
+    const vor &v = w.get_vor_by_frequency(active_frequency);
     if (v.get_frequency() == -1)
     {
         r.flag = true;

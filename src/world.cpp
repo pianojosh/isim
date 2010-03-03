@@ -4,6 +4,7 @@
 #include "../include/world.h"
 #include "../include/sdl_helper.h"
 #include "../include/vor.h"
+#include "../include/localizer.h"
 
 #include <iostream>
 #include <algorithm>
@@ -35,7 +36,16 @@ const vor& world::get_vor_by_frequency(int vor_frequency) const
 {
     for (unsigned int i = 0; i < objects.size(); i++)
     {
-        if (vor* v = dynamic_cast<vor*>(objects[i]))
+
+        if (localizer* l = dynamic_cast<localizer*>(objects[i]))
+        {
+            if (l->get_frequency() == vor_frequency)
+            {
+                return *l;
+            }
+        }
+
+        else if (vor* v = dynamic_cast<vor*>(objects[i]))
         {
             if (v->get_frequency() == vor_frequency)
             {

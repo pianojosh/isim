@@ -6,6 +6,7 @@
 #include "../include/cdi_gauge.h"
 #include "../include/panel.h"
 #include "../include/airport.h"
+#include "../include/localizer.h"
 
 #include <iostream>
 #include <string>
@@ -396,12 +397,19 @@ void isim_controller::initialize()
 
     airport* kbed = new airport(-71.2890300, 42.4699531, 133, -16, "KBED", 1.5);
 
+    localizer* kbed29loc = new localizer(-71.304045, 42.472167, 124.7, -16, "I-ULJ", 11115, 293, 5.0);
+    localizer* kbed11loc = new localizer(-71.268402, 42.468865, 132.6, -16, "I-ULJ", 11115, 113, 4.63);
+
     isim_world.add_object(bos);
     isim_world.add_object(lwm);
     isim_world.add_object(mht);
     isim_world.add_object(psm);
     isim_world.add_object(gdm);
+
     isim_world.add_object(kbed);
+
+    isim_world.add_object(kbed29loc);
+    //isim_world.add_object(kbed11loc);
 
     isim_world.finalize_objects();
 
