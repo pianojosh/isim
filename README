@@ -1,0 +1,8 @@
+isim is a simple, vector-graphics based flight simulator-like application.
+
+Its purpose is to make practicing instrument flying procedures easier, without the overhead of a full flight simulator.
+
+The graphics and flight model are deliberately heavily simplified, to make it easier for the user to focus entirely on flying procedures.
+
+It's still relatively incomplete, but it is runnable and everything that is present works as expected.
+
